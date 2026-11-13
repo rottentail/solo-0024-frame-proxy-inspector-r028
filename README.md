@@ -121,7 +121,8 @@ tools/
 ├── harness.py
 ├── check_clip_intake.py
 ├── check_shot_index.py
-└── check_contact_sheet.py
+├── check_contact_sheet.py
+└── check_proxy_probes.py
 ```
 
 ## Build and workflow checks
@@ -143,6 +144,19 @@ PYTHONPATH=src:. python3 tools/check_contact_sheet.py
 Each check starts a real loopback HTTP server, generates media through the
 production AVI writer, completes the named workflow, and verifies persisted
 state or artifact bytes. Temporary records are removed when the check exits.
+
+## Design evaluations
+
+`docs/proxy-two-stage-design.md` evaluates a two-stage inspection design (low
+resolution proxy triage plus original-frame confirmation) against the current
+fingerprint, minimum-scene, and contact sheet pipeline. Every quantitative
+claim in that document is recomputed by production-code probes:
+
+```bash
+PYTHONPATH=src:. python3 tools/check_proxy_probes.py
+```
+
+The probes exercise the existing detector only; they add no pipeline code.
 
 ## Environment variables
 
